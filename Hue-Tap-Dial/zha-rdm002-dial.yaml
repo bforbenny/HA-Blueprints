@@ -1,0 +1,22 @@
+blueprint:
+  name: RDM002 Rotary Dial
+  description: "Expose RDM002 rotary dial"
+  domain: automation
+  input:
+    remote:
+      name: Philips Hue Tap Dial Switch (RDM002)
+      selector:
+        device:
+          integration: zha
+          manufacturer: Signify Netherlands B.V.
+          model: RDM002
+    dial_scale:
+      name: Dial Scale
+      description: Scale factor for dial turning.
+      default: 0.5
+      selector:
+        number:
+          min: 0.1
+          max: 5.0
+          step: 0.1
+  source_url: https://github.com/bforbenny/HA-Blueprints/blob/
