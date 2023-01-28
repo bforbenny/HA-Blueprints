@@ -42,15 +42,13 @@ action:
           - "{{ command == 'step_with_on_off' }}"
           - "{{ step_mode == 'StepMode.Up' }}"
         sequence:
-          - default:
-              - service: notify.mobile_app_ben_iphone11
-                data:
-                  message: "{{ step_size * dial_scale }}"
+          - service: notify.mobile_app_ben_iphone11
+            data:
+              message: "{{ step_size * dial_scale }}"
       - conditions:
           - "{{ command == 'step_with_on_off' }}"
           - "{{ step_mode == 'StepMode.Down' }}"
         sequence:
-          - default:
-              - service: notify.mobile_app_ben_iphone11
-                data:
-                  message: "{{ -step_size * dial_scale }}"
+          - service: notify.mobile_app_ben_iphone11
+            data:
+              message: "{{ -step_size * dial_scale }}"
