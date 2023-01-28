@@ -1,5 +1,5 @@
 blueprint:
-  name: RDM002 Rotary Dial
+  name: RDM002 Rotary Dial - Climate
   description: "Expose RDM002 rotary dial to set climate control"
   domain: automation
   input:
@@ -10,6 +10,12 @@ blueprint:
           integration: zha
           manufacturer: Signify Netherlands B.V.
           model: RDM002
+    HVAC_1:
+      name: Climate control
+      selector:
+        target:
+          entity:
+            domain: climate
     dial_scale:
       name: Dial Scale
       description: Scale factor for dial turning.
@@ -24,6 +30,8 @@ mode: restart
 max_exceeded: silent
 variables:
   dial_scale: !input "dial_scale"
+  HVAC_1: !input "HVAC_1"
+  HVAC_1_SP: '{{ state_attr(HVAC_1, "temperature") }}'
 trigger:
   - platform: event
     event_type: zha_event
@@ -44,11 +52,11 @@ action:
         sequence:
           - service: notify.mobile_app_ben_iphone11
             data:
-              message: "{{ step_size * dial_scale }}"
+              message: "{{ HVAC_1_SP + step_size * dial_scale }}"
       - conditions:
           - "{{ command == 'step_with_on_off' }}"
           - "{{ step_mode == 'StepMode.Down' }}"
         sequence:
           - service: notify.mobile_app_ben_iphone11
             data:
-              message: "{{ -step_size * dial_scale }}"
+              message: "{{ HVAC_1_SP - step_size * dial_scale }}"
