@@ -31,7 +31,7 @@ max_exceeded: silent
 variables:
   dial_scale: !input "dial_scale"
   HVAC_1: !input "HVAC_1"
-  HVAC_1_SP: '{{ state_attr(HVAC_1, "temperature") }}'
+  HVAC_1_SP: '{{ state_attr(HVAC_1, "temperature") }}' #Getting current setpoint temperature
 trigger:
   - platform: event
     event_type: zha_event
