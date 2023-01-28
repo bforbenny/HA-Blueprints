@@ -11,6 +11,7 @@ blueprint:
           manufacturer: Signify Netherlands B.V.
           model: RDM002
     HVAC_1:
+      ## Tested with Sensibo integration
       name: Climate control
       selector:
         target:
