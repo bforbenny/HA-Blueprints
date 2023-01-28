@@ -1,7 +1,8 @@
 blueprint:
   name: RDM002 Rotary Dial - Climate
-  description: "Expose RDM002 rotary dial to set climate control"
+  description: Expose RDM002 rotary dial to set climate control
   domain: automation
+  source_url: https://github.com/bforbenny/HA-Blueprints/blob/master/Hue-Tap-Dial/zha-rdm002-dial.yaml
   input:
     remote:
       name: Philips Hue Tap Dial Switch (RDM002)
@@ -10,42 +11,50 @@ blueprint:
           integration: zha
           manufacturer: Signify Netherlands B.V.
           model: RDM002
-    HVAC_1:
-      ## Tested with Sensibo integration
+          multiple: false
+    climate:
       name: Climate control
       selector:
-        target:
-          entity:
-            domain: climate
+        entity:
+          domain: climate
     dial_scale:
       name: Dial Scale
       description: Scale factor for dial turning.
-      default: 0.1
+      default: 0.125
       selector:
         number:
-          min: 0.1
+          min: 0.125
           max: 5.0
-          step: 0.1
-  source_url: https://github.com/bforbenny/HA-Blueprints/blob/master/Hue-Tap-Dial/zha-rdm002-dial.yaml
+          step: 0.125
+          mode: slider
+    delay:
+      name: Delay
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 15
+          unit_of_measurement: seconds
+          mode: slider
 mode: restart
 max_exceeded: silent
-variables:
-  dial_scale: !input "dial_scale"
-  HVAC_1: !input "HVAC_1"
 trigger:
   - platform: event
     event_type: zha_event
     event_data:
-      device_id: !input "remote"
+      device_id: !input remote
+variables:
+  dial_scale: !input dial_scale
+  climate: !input climate
+  delay: !input delay
+  climate_SP: "{{ states[climate].attributes.temperature }}"
 action:
   - variables:
       command: "{{ trigger.event.data.command }}"
       args: "{{ trigger.event.data.args }}"
       params: "{{ trigger.event.data.params }}"
-      scene: "{{ trigger.event.data.params.scene_id }}"
       step_mode: "{{ trigger.event.data.params.step_mode }}"
-      step_size: "{{ trigger.event.data.params.step_size }}"
-      HVAC_1_SP: "{{ state_attr(HVAC_1, 'temperature') }}" # Unable Getting current setpoint temperature
+      step_size: "{{ trigger.event.data.params.step_size }}" # 1 click = 8
   - choose:
       - conditions:
           - "{{ command == 'step_with_on_off' }}"
@@ -53,11 +62,11 @@ action:
         sequence:
           - service: notify.mobile_app_ben_iphone11
             data:
-              message: "{{ HVAC_1_SP + step_size * dial_scale }}"
+              message: "{{ climate_SP + step_size * dial_scale }}"
       - conditions:
           - "{{ command == 'step_with_on_off' }}"
           - "{{ step_mode == 'StepMode.Down' }}"
         sequence:
           - service: notify.mobile_app_ben_iphone11
             data:
-              message: "{{ HVAC_1_SP - step_size * dial_scale }}"
+              message: "{{ climate_SP - step_size * dial_scale }}"
