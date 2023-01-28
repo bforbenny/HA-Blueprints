@@ -1,0 +1,61 @@
+# https://gist.github.com/Klumper/0ad49c0613606b14f1a56551e4a7d737
+
+blueprint:
+  name: HomeAssisstant update available notification
+  description: Notify user on update availability
+  domain: automation
+  source_url: https://github.com/bforbenny/HA-Blueprints/blob/master/General/update-notifier.yaml
+
+  # INPUTS
+  input:
+    updateSensor:
+      name: Update Sensor
+      description: Sensor which will trigger automation
+      selector:
+        entity:
+          domain: update
+    notificationTitle:
+      name: Notification Title (optional)
+      default: "Upgrade Available!"
+    notificationMessage:
+      name: Notification Message (optional)
+      default: "Home Assisstant {{ newest_version }} is available for download"
+    delay:
+      name: Delay (optional)
+      default:
+        selector:
+          number:
+            min: 0
+            max: 24
+            unit_of_measurement: hours
+            mode: slider
+    notifyDevices:
+      name: Device(s) to notify
+      selector:
+        device:
+          integration: mobile_app
+
+# TRIGGERS
+trigger:
+  platform: state
+  entity_id: !input updateSensor
+  to: "on"
+
+# VARIABLES
+variables:
+  updater: !input updateSensor
+  newest_version: "{{ states[updater].attributes.latest_version }}"
+  release_notes: "{{ states[updater].attributes.release_summary }}"
+  notify_device: !input notifyDevices
+  delay: !input delay
+  notification_title: !input notificationTitle
+  notification_message: !input notificationMessage
+
+# ACTION
+action:
+  - delay: "{{ delay }}"
+  - device_id: notify_device
+    domain: mobile_app
+    type: notify
+    title: "{{ notification_title }}"
+    message: "{{ notification_message }}"

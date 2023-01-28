@@ -7,7 +7,11 @@ Collection of [HomeAssisstant](https://homeassisstant.io) Blueprints
 
 ## Contents
 
-### [Hue Tap Dial - Rotary Dial](/Hue-Tap-Dial/) [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
+### [Update Notification](/General/update-notifier.yaml)
+
+[![Blueprint Import](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fbforbenny%2FHA-Blueprints%2Fblob%2Fmaster%2FGeneral%2Fupdate-notifier.yaml)
+
+### [Hue Tap Dial - Rotary Dial](/Hue-Tap-Dial/zha-rdm002-dial.yaml) [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
 **WORK IN PROGRESS**
 
