@@ -19,17 +19,17 @@ blueprint:
       default: "Upgrade Available!"
     notificationMessage:
       name: Notification Message (optional)
-      default: "Home Assisstant {{ newest_version }} is available for download"
+      default: "Home Assisstant {{ newest_version }} is available for download\r\n{{ release_notes }}"
     delay:
       name: Delay (optional)
-      default:
-        selector:
-          number:
-            min: 0
-            max: 24
-            unit_of_measurement: hours
-            mode: slider
-    notifyDevices:
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 24
+          unit_of_measurement: hours
+          mode: slider
+    notifyDevice:
       name: Device(s) to notify
       selector:
         device:
@@ -46,7 +46,7 @@ variables:
   updater: !input updateSensor
   newest_version: "{{ states[updater].attributes.latest_version }}"
   release_notes: "{{ states[updater].attributes.release_summary }}"
-  notify_device: !input notifyDevices
+  notify_device: !input notifyDevice
   delay: !input delay
   notification_title: !input notificationTitle
   notification_message: !input notificationMessage
@@ -54,8 +54,9 @@ variables:
 # ACTION
 action:
   - delay: "{{ delay }}"
-  - device_id: notify_device
+  - alias: "Send companion app notification"
     domain: mobile_app
     type: notify
+    device_id: !input notifyDevice
     title: "{{ notification_title }}"
     message: "{{ notification_message }}"
