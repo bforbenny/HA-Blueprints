@@ -45,7 +45,7 @@ action:
       scene: "{{ trigger.event.data.params.scene_id }}"
       step_mode: "{{ trigger.event.data.params.step_mode }}"
       step_size: "{{ trigger.event.data.params.step_size }}"
-      HVAC_1_SP: "{{ state_attr(HVAC_1, 'temperature') }}" #Getting current setpoint temperature
+      HVAC_1_SP: "{{ state_attr(HVAC_1, 'temperature') }}" # Unable Getting current setpoint temperature
   - choose:
       - conditions:
           - "{{ command == 'step_with_on_off' }}"
