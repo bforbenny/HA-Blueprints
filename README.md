@@ -7,9 +7,7 @@ Collection of [HomeAssisstant](https://homeassisstant.io) Blueprints
 
 ## Contents
 
-### [Hue Tap Dial - Rotary Dial](/Hue-Tap-Dial/)
-
-[![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
+### [Hue Tap Dial - Rotary Dial](/Hue-Tap-Dial/) [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
 **WORK IN PROGRESS**
 
