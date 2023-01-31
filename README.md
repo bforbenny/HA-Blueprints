@@ -18,4 +18,6 @@ Tested on iOS with companion app.
 
 **WORK IN PROGRESS**
 
-[![Blueprint Import](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fbforbenny%2FHA-Blueprints%2Fblob%2Fmaster%2FHue-Tap-Dial%2Fzha-rdm002-dial.yaml)
+[![Blueprint Import](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fbforbenny%2FHA-Blueprints%2Fblob%2Fmaster%2FHue-Tap-Dial%2Fzha-rdm002-climate.yaml)
+
+Climate control with rotary dial function from Hue Tap Dial, connected via ZHA
